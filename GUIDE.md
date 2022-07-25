@@ -6,7 +6,6 @@ WXDCVault Address: `0xAf5Ecd6461fe07082adFa432bD1b9e704866689A`
 
 ## FlashBorrowerExample.sol
 `
-// SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
 
 interface IERC20 {
