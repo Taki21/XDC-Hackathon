@@ -167,3 +167,39 @@ contract FlashBorrower is IERC3156FlashBorrower {
         return keccak256('ERC3156FlashBorrower.onFlashLoan');
     }
 }
+```
+## Calling the Flashloan
+
+Using the deployed contract at the very top of the guide (WXDCVault.sol), you can call the `flashLoan` function found in the code
+
+```
+    function flashLoan(
+        IERC3156FlashBorrower receiver, // this will be the address of the deployed FlashBorrowerExample.sol contract
+        address token, // the token you are borrowing so WXDC contract
+        uint256 amount, // amount borrowing
+        address router1, // the first DEX router to buy
+        address router2, // the second DEX router to sell
+        address swapToken, // the token you are swapping to
+        uint256 swapIn, // same value as amount borrowing
+        bytes calldata data // For this paramater, simply input '0x'
+    ) external override returns(bool) {
+        require(
+            supportedTokens[token],
+            "FlashLender: Unsupported currency"
+        );
+        fee = _flashFee(token, amount);
+        require(
+            IERC20(token).transfer(address(receiver), amount),
+            "FlashLender: Transfer failed"
+        );
+        require(
+            receiver.onFlashLoan(msg.sender, token, amount, fee, router1, router2, swapToken, swapIn, data) == CALLBACK_SUCCESS,
+            "FlashLender: Callback failed"
+        );
+        require(
+            IERC20(token).transferFrom(address(receiver), address(this), amount + fee),
+            "FlashLender: Repay failed"
+        );
+        return true;
+    }
+`
