@@ -3,6 +3,7 @@
 This guide will show you the basics of setting up a flashloan smart contract for your own personal use.
 
 WXDCVault Address: `0xAf5Ecd6461fe07082adFa432bD1b9e704866689A`
+https://explorer.xinfin.network/address/xdcaf5ecd6461fe07082adfa432bd1b9e704866689a
 
 ## FlashBorrowerExample.sol
 
