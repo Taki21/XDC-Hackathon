@@ -154,4 +154,3 @@ contract FlashBorrower is IERC3156FlashBorrower {
         return keccak256('ERC3156FlashBorrower.onFlashLoan');
     }
 }
-`
