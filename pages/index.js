@@ -27,13 +27,13 @@ const Home = () => {
 
             <Link href='../staking'>
                 <a>
-                    <h1 className="mx-8 font-medium hover:text-[#567ca2] transition-all font-Main">About</h1>
+                    <h1 className="mx-8 font-medium hover:text-[#567ca2] transition-all font-Main">Staking</h1>
                 </a>
             </Link>
 
-            <Link href='../vaults'>
+            <Link href='https://github.com/Taki21/XDC-Hackathon'>
                 <a>
-                    <h1 className="font-medium hover:text-[#567ca2] transition-all font-Main">Links</h1>
+                    <h1 className="font-medium hover:text-[#567ca2] transition-all font-Main">Github</h1>
                 </a>
             </Link>
           </div>
@@ -58,7 +58,9 @@ const Home = () => {
                   <button className='text-white text-lg rounded-lg w-48 h-16 mr-4 bg-[#496eb3] hover:bg-[#5673a2] transition-all font-Main'>Launch App</button>
                 </a>
               </Link>
-              <button className='text-[#1d1d1d] text-lg rounded-lg w-48 h-16 bg-[#ffffff] hover:bg-[#5673a2] hover:text-white transition-all font-Main'>Learn More</button>
+              <Link href='https://github.com/Taki21/XDC-Hackathon'>
+                <button className='text-[#1d1d1d] text-lg rounded-lg w-48 h-16 bg-[#ffffff] hover:bg-[#5673a2] hover:text-white transition-all font-Main'>GitHub Repo</button>
+              </Link>
             </div>
           </div>
           <img src='/landing.png' className='w-1/2 h-1/2'/>
