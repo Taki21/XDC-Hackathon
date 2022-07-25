@@ -5,6 +5,9 @@ This guide will show you the basics of setting up a flashloan smart contract for
 WXDCVault Address: `0xAf5Ecd6461fe07082adFa432bD1b9e704866689A`
 
 ## FlashBorrowerExample.sol
+
+These are all the interfaces that you will need:
+
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.13;
