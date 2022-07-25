@@ -86,12 +86,15 @@ interface IERC3156FlashBorrower {
     ) external returns (bytes32);
 }
 ```
+
+The following are addresses to the Routers of XDCSwaps and XSwap:
+`address private constant XDC_SWAPS_ROUTER = 0x948fE8BB54383745c87E9607dA245D91207E3bF0;`
+`address private constant X_SWAP_ROUTER = 0xf9c5E4f6E627201aB2d6FB6391239738Cf4bDcf9;`
+This is where the arbitrage logic will be executed:
+
 ```
 contract FlashBorrower is IERC3156FlashBorrower {
     uint256 MAX_INT = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;
-
-    //address private constant XDC_SWAPS_ROUTER = 0x948fE8BB54383745c87E9607dA245D91207E3bF0;
-    //address private constant X_SWAP_ROUTER = 0xf9c5E4f6E627201aB2d6FB6391239738Cf4bDcf9;
 
     address private constant WXDC = 0x951857744785E80e2De051c32EE7b25f9c458C42;
 
