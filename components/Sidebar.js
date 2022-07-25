@@ -1,9 +1,20 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useWeb3React } from "@web3-react/core";
 
 function Sidebar() {
 
     const router = useRouter();
+    const { active, account, library, connector, activate, deactivate } = useWeb3React()
+
+    async function disconnect() {
+        try {
+            deactivate()
+            localStorage.setItem('isWalletConnected', false)
+        } catch (ex) {
+            console.log(ex)
+        }
+    }
 
     return (
         <div className="flex flex-col items-center justify-between w-1/6 min-h-screen py-2">
@@ -28,7 +39,7 @@ function Sidebar() {
             </div>
 
             <div className="flex self-start p-4">
-                <h1 className="flex">Logout</h1>
+                <button onClick={disconnect} className="text-white rounded-lg w-24 py-2 bg-[#335693] hover:bg-[#1a2d56] transition-all justify-center">Logout</button>
             </div>
         </div>
     );

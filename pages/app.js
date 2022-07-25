@@ -33,6 +33,9 @@ function App() {
 
     // firstRouteisXSwap
     const [firstRouteisXSwap, setFirstRouteisXSwap] = useState(false);
+
+    // tx
+    const [currTx, setTx] = useState('');
     
     const XSWAP_ROUTER = '0xf9c5E4f6E627201aB2d6FB6391239738Cf4bDcf9'
     const XDCSWAPS_ROUTER = '0x948fE8BB54383745c87E9607dA245D91207E3bF0'
@@ -44,9 +47,9 @@ function App() {
 
         if(amount > 0) {
             if(firstRouteisXSwap) {
-                await Lender.methods.flashLoan(Borrower, WXDC_CONTRACT, amountBorrowing, XSWAP_ROUTER, XDCSWAPS_ROUTER, addr, amountBorrowing, '0x').send({from: account})
+                await Lender.methods.flashLoan(Borrower, WXDC_CONTRACT, amountBorrowing, XSWAP_ROUTER, XDCSWAPS_ROUTER, addr, amountBorrowing, '0x').send({from: account}).on('transactionHash', (hash) => setTx(hash))
             } else {
-                await Lender.methods.flashLoan(Borrower, WXDC_CONTRACT, amountBorrowing, XDCSWAPS_ROUTER, XSWAP_ROUTER, addr, amountBorrowing, '0x').send({from: account})
+                await Lender.methods.flashLoan(Borrower, WXDC_CONTRACT, amountBorrowing, XDCSWAPS_ROUTER, XSWAP_ROUTER, addr, amountBorrowing, '0x').send({from: account}).on('transactionHash', (hash) => setTx(hash))
             }
         }
     }
@@ -180,6 +183,7 @@ function App() {
 
                     <div className="flex flex-col justify-center bg-[#111111] py-4 px-8 rounded-lg mt-4 ml-8 text-white font-Main">
                         <button onClick={execFlashLoan} className="bg-[#335693] py-4 px-8 rounded-lg">Submit Transaction</button>
+                        <h1>{currTx !== '' ? (<Link href={'https://explorer.xinfin.network/txs/' + currTx}><a>Flashloan Tx</a></Link>) : ''}</h1>
                     </div>
                     
                 </div>

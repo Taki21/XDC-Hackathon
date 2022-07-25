@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { VaultContract, VaultABI } from "../components/contracts/Vault";
 import { ERC20 } from "../components/contracts/ERC20";
 import { useWeb3React } from "@web3-react/core";
+import Link from "next/link";
 
 function Staking() {
 
@@ -28,26 +29,29 @@ function Staking() {
     // rewards state
     const [rewards, setRewards] = useState(0);
 
+    // currTx
+    const [currTx, setTx] = useState(false);
+
     const { active, account, library, connector, activate, deactivate } = useWeb3React();
 
     async function approveWXDC() {
         const WXDC = new library.eth.Contract(ERC20, '0x951857744785E80e2De051c32EE7b25f9c458C42');
-        await WXDC.methods.approve(VaultContract, '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff').send({ from: account })
+        await WXDC.methods.approve(VaultContract, '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff').send({ from: account }).on('transactionHash', (hash) => setTx(hash))
     }
 
     async function stakeWXDC() {
         const Vault = new library.eth.Contract(VaultABI, VaultContract);
-        await Vault.methods.stake(((BigInt((amount * 1000000)) * BigInt(10**18)) / BigInt(1000000))).send({ from: account })
+        await Vault.methods.stake(((BigInt((amount * 1000000)) * BigInt(10**18)) / BigInt(1000000))).send({ from: account }).on('transactionHash', (hash) => setTx(hash))
     }
 
     async function unstakeWXDC() {
         const Vault = new library.eth.Contract(VaultABI, VaultContract);
-        await Vault.methods.withdraw(((BigInt((amount * 1000000)) * BigInt(10**18)) / BigInt(1000000))).send({ from: account })
+        await Vault.methods.withdraw(((BigInt((amount * 1000000)) * BigInt(10**18)) / BigInt(1000000))).send({ from: account }).on('transactionHash', (hash) => setTx(hash))
     }
 
     async function claim() {
         const Vault = new library.eth.Contract(VaultABI, VaultContract);
-        await Vault.methods.getReward().send({ from: account })
+        await Vault.methods.getReward().send({ from: account }).on('transactionHash', (hash) => setTx(hash))
     }
 
     useEffect(() => {
@@ -68,7 +72,7 @@ function Staking() {
             }
             balances();
         }
-    }, [active]);
+    }, [active, tokenAllowance, currTx]);
 
     return (
         <main className="flex bg-[#191a1b] font-Main">
@@ -106,7 +110,7 @@ function Staking() {
                         </div>
 
                         <h1 className="mt-8 text-xs font-light text-gray-400">New Total Stake: 0.0 WXDC</h1>
-                        <h1 className="mt-6 text-xs font-light text-gray-400">{stakeButton ? 'Staking' : 'Unstaking'} Fee: 0.0 XDC</h1>
+                        <h1 className="mt-6 text-xs font-light text-gray-400">Current Tx: <Link href={'https://explorer.xinfin.network/txs/' + currTx}><a>https://explorer.xinfin.network/txs/{currTx}</a></Link></h1>
 
                         {tokenAllowance > 0 ? 
                             (
