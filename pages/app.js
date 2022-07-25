@@ -5,6 +5,7 @@ import { Borrower, BorrowerABI } from "../components/contracts/Borrower";
 import { ERC20 } from "../components/contracts/ERC20";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 function App() {
 
