@@ -101,6 +101,7 @@ contract FlashBorrower is IERC3156FlashBorrower {
 
     address private constant WXDC = 0x951857744785E80e2De051c32EE7b25f9c458C42;
 
+    // This function does the actual swap on the router provided
     function swap(address _router, address _tokenIn, address _tokenOut, uint256 _amountIn, uint256 _amountOutMin, address _to) internal {
         IERC20(_tokenIn).approve(_router, _amountIn);
 
@@ -119,6 +120,7 @@ contract FlashBorrower is IERC3156FlashBorrower {
         IUniswapV2Router(_router).swapExactTokensForTokens(_amountIn, _amountOutMin, path, _to, block.timestamp);
     }
     
+    // This function will help you find the minimum output from amount in specified
     function getAmountOutMin(address _router, address _tokenIn, address _tokenOut, uint256 _amountIn) public view returns (uint256) {
 
         address[] memory path;
@@ -154,6 +156,7 @@ contract FlashBorrower is IERC3156FlashBorrower {
         IERC20(token).approve(msg.sender, MAX_INT);
         
         // arbitrage logic
+        // In this example, WXDC will be swapped to the desired token in the first DEX and swapped back to WXDC in the other DEX in hopes of profit
         uint256 router1Out = getAmountOutMin(router1, WXDC, swapToken, swapIn);
         uint256 router2Out = getAmountOutMin(router2, swapToken, WXDC, router1Out);
 
